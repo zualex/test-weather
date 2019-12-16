@@ -9,9 +9,11 @@ use Weather\Storage\Exception\InvalidDriver;
 
 class StorageFactory
 {
+    const DRIVER_LOCAL = 'local';
+
     public function create(string $driver)
     {
-        if ($driver == 'local') {
+        if (strtolower($driver) === self::DRIVER_LOCAL) {
             return new LocalDriver();
         }
 
