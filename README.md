@@ -24,6 +24,7 @@ $content = (new DataConverter())
     ->convertTo('json')
     ->toString();
 
-$storage = (new StorageFactory())->create('local');
-$storage->save('storage/file.json', $content);
+$adapter = new Local(__DIR__.'/path/to/root/');
+$filesystem = new Filesystem($adapter);
+$response = $filesystem->put('storage/file.json', $content);
 ```
