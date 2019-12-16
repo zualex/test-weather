@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tests;
+namespace tests\ArraySorter;
 
 use PHPUnit\Framework\TestCase;
 use Weather\ArraySorter\ArraySorter;
