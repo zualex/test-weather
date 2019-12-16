@@ -18,13 +18,12 @@ $client->setApiKey('SECRET-API-KEY');
 $coordinates = [46.482, 30.723];
 $response = $client->getWeather($coordinates);
 
-$arraySorter = new ArraySorter();
-$arraySorter->set($response->jsonSerialize());
-$arraySorter->sortBy(['date', 'temperature', 'wind_direction']);
-$content = $arraySorter->get();
+$content = (new DataConverter())
+    ->setArray($response->jsonSerialize())
+    ->sortBy(['date', 'temperature', 'wind_direction'])
+    ->convertTo('json')
+    ->toString();
 
 $storage = (new StorageFactory())->create('local');
-$storage->setContentAsArray($content);
-$storage->convertContentTo('json');
-$storage->save('storage/file.json');
+$storage->save('storage/file.json', $content);
 ```
