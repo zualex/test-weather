@@ -1,5 +1,11 @@
 # Test Weather
 
+## Commands
+```bash
+docker-compose up -d
+docker exec -it test-weather-fpm composer install
+```
+
 ## Example
 ```php
 $httpRequestFactory = new RequestFactory();
