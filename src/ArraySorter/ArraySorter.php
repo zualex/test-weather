@@ -11,17 +11,24 @@ class ArraySorter
      */
     private $array;
 
+    public function __construct(array $array)
+    {
+        $this->setArray($array);
+    }
+
     /**
-     * Set array
+     * Sort by another array
      *
      * @param array $array
-     * @return ArraySorter
+     * @param array $arrayDirection
+     * @return array
      */
-    public function set(array $array): self
+    public static function sort(array $array, array $arrayDirection): array
     {
-        $this->array = $array;
+        $sorter = new static($array);
+        $sorter->sortBy($arrayDirection);
 
-        return $this;
+        return $sorter->get();
     }
 
     /**
@@ -39,9 +46,10 @@ class ArraySorter
     public function sortBy(array $arrayDirection): self
     {
         $array = $this->array;
-        $arrayOrdered = array_merge(array_flip($arrayDirection), $array);
-
-        $this->set($arrayOrdered);
+        if (count($array) && count($arrayDirection)) {
+            $arrayOrdered = array_merge(array_flip($arrayDirection), $array);
+            $this->setArray($arrayOrdered);
+        }
 
         return $this;
     }
@@ -54,5 +62,18 @@ class ArraySorter
     public function get(): array
     {
         return $this->array;
+    }
+
+    /**
+     * Set array
+     *
+     * @param array $array
+     * @return ArraySorter
+     */
+    private function setArray(array $array): self
+    {
+        $this->array = $array;
+
+        return $this;
     }
 }

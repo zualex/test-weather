@@ -16,16 +16,33 @@ class ArraySorterTest extends TestCase
      * @param $direction
      * @param $result
      */
-    public function testSortBy($array, $direction, $result)
+    public function testSort($array, $direction, $result): void
     {
-        $arraySorter = new ArraySorter();
-        $arraySorter->set($array);
-        $arraySorter->sortBy($direction);
-
-        $this->assertTrue($result === $arraySorter->get());
+        $this->assertSame($result, ArraySorter::sort($array, $direction));
     }
 
-    public function provider()
+    /**
+     * @dataProvider provider
+     *
+     * @param $array
+     * @param $direction
+     * @param $result
+     */
+    public function testSortBy($array, $direction, $result): void
+    {
+        $arraySorter = new ArraySorter($array);
+        $arraySorter->sortBy($direction);
+
+        $this->assertSame($result, $arraySorter->get());
+    }
+
+    public function testSortWithEmpty(): void
+    {
+        $this->assertSame([], ArraySorter::sort([], ['a', 'b', 'c']));
+        $this->assertSame(['a', 'b', 'c'], ArraySorter::sort(['a', 'b', 'c'], []));
+    }
+
+    public function provider(): array
     {
         return [
             [
