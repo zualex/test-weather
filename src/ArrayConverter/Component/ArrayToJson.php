@@ -9,20 +9,10 @@ use Weather\ArrayConverter\ComponentInterface;
 class ArrayToJson implements ComponentInterface
 {
     /**
-     * @var array
-     */
-    private $array;
-
-    public function __construct(array $array)
-    {
-        $this->array = $array;
-    }
-
-    /**
      * {@inheritDoc}
      */
-    public function convert(): string
+    public function convert(array $array): string
     {
-        return json_encode($this->array);
+        return json_encode($array);
     }
 }

@@ -13,5 +13,5 @@ interface ArraySorterInterface
      * @param array $arrayDirection
      * @return array
      */
-    public static function sort(array $array, array $arrayDirection): array;
+    public function sort(array $array, array $arrayDirection): array;
 }

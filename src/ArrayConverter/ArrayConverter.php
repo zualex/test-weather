@@ -21,54 +21,49 @@ class ArrayConverter implements ArrayConverterInterface
     private $componentToXml;
 
     /**
-     * @param array $array
      * @param ComponentInterface|null $componentToJson
      * @param ComponentInterface|null $componentToXml
      */
     public function __construct(
-        array $array,
         ComponentInterface $componentToJson = null,
         ComponentInterface $componentToXml = null
     ) {
-        $this->componentToJson = $componentToJson ?? new ArrayToJson($array);
-        $this->componentToXml = $componentToXml ?? new ArrayToXml($array);
+        $this->componentToJson = $componentToJson ?? new ArrayToJson();
+        $this->componentToXml = $componentToXml ?? new ArrayToXml();
     }
 
     /**
      * {@inheritDoc}
      */
-    public static function convertToJson(array $array): string
+    public function convertToJson(array $array): string
     {
-        $converter = new static($array);
-
-        return $converter->convertTo(self::TYPE_JSON);
+        return $this->convertTo(self::TYPE_JSON, $array);
     }
 
     /**
      * {@inheritDoc}
      */
-    public static function convertToXml(array $array): string
+    public function convertToXml(array $array): string
     {
-        $converter = new static($array);
-
-        return $converter->convertTo(self::TYPE_XML);
+        return $this->convertTo(self::TYPE_XML, $array);
     }
 
     /**
      * Convert array
      *
      * @param string $type
+     * @param array $array
      * @return string
      * @throws InvalidType
      */
-    public function convertTo(string $type): string
+    public function convertTo(string $type, array $array): string
     {
         if ($type === self::TYPE_JSON) {
-            return $this->componentToJson->convert();
+            return $this->componentToJson->convert($array);
         }
 
         if ($type === self::TYPE_XML) {
-            return $this->componentToXml->convert();
+            return $this->componentToXml->convert($array);
         }
 
         throw new InvalidType(InvalidType::MESSAGE_NOT_FOUND_TYPE);

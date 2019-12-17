@@ -15,7 +15,7 @@ interface ArrayConverterInterface
      * @param array $array
      * @return string
      */
-    public static function convertToJson(array $array): string;
+    public function convertToJson(array $array): string;
 
     /**
      * Convert array to xml
@@ -23,5 +23,5 @@ interface ArrayConverterInterface
      * @param array $array
      * @return string
      */
-    public static function convertToXml(array $array): string;
+    public function convertToXml(array $array): string;
 }

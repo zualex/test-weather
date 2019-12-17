@@ -43,6 +43,38 @@ class App
     }
 
     /**
+     * @return WeatherInterface
+     */
+    public function getWeatherClient(): WeatherInterface
+    {
+        return $this->weatherClient;
+    }
+
+    /**
+     * @return ArraySorterInterface
+     */
+    public function getArraySorter(): ArraySorterInterface
+    {
+        return $this->arraySorter;
+    }
+
+    /**
+     * @return ArrayConverterInterface
+     */
+    public function getArrayConverter(): ArrayConverterInterface
+    {
+        return $this->arrayConverter;
+    }
+
+    /**
+     * @return FilesystemInterface
+     */
+    public function getFilesystem(): FilesystemInterface
+    {
+        return $this->filesystem;
+    }
+
+    /**
      * Get weather from api
      *
      * @param CoordinateDTO $coordinate
@@ -50,7 +82,7 @@ class App
      */
     public function getWeather(CoordinateDTO $coordinate): WeatherDTO
     {
-        return $this->weatherClient->getWeather($coordinate);
+        return $this->getWeatherClient()->getWeather($coordinate);
     }
 
     /**
@@ -63,10 +95,10 @@ class App
      */
     public function saveAsSortedJson(string $fileName, array $array, array $arrayDirection): bool
     {
-        $orderedArray = $this->arraySorter::sort($array, $arrayDirection);
-        $content = $this->arrayConverter::convertToJson($orderedArray);
+        $orderedArray = $this->getArraySorter()->sort($array, $arrayDirection);
+        $content = $this->getArrayConverter()->convertToJson($orderedArray);
 
-        return $this->filesystem->put($fileName, $content);
+        return $this->getFilesystem()->put($fileName, $content);
     }
 
     /**
@@ -79,9 +111,9 @@ class App
      */
     public function saveAsSortedXml(string $fileName, array $array, array $arrayDirection): bool
     {
-        $orderedArray = $this->arraySorter::sort($array, $arrayDirection);
-        $content = $this->arrayConverter::convertToXml($orderedArray);
+        $orderedArray = $this->getArraySorter()->sort($array, $arrayDirection);
+        $content = $this->getArrayConverter()->convertToXml($orderedArray);
 
-        return $this->filesystem->put($fileName, $content);
+        return $this->getFilesystem()->put($fileName, $content);
     }
 }

@@ -10,20 +10,10 @@ use \Spatie\ArrayToXml\ArrayToXml as SpatieArrayToXml;
 class ArrayToXml implements ComponentInterface
 {
     /**
-     * @var array
-     */
-    private $array;
-
-    public function __construct(array $array)
-    {
-        $this->array = $array;
-    }
-
-    /**
      * {@inheritDoc}
      */
-    public function convert(): string
+    public function convert(array $array): string
     {
-        return SpatieArrayToXml::convert($this->array);
+        return SpatieArrayToXml::convert($array);
     }
 }

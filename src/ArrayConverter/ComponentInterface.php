@@ -9,7 +9,8 @@ interface ComponentInterface
     /**
      * Convert array
      *
+     * @param array $array
      * @return string
      */
-    public function convert(): string;
+    public function convert(array $array): string;
 }
