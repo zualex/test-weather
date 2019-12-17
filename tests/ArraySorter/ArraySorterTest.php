@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tests\ArraySorter;
+namespace Tests\ArraySorter;
 
 use PHPUnit\Framework\TestCase;
 use Weather\ArraySorter\ArraySorter;
@@ -18,7 +18,7 @@ class ArraySorterTest extends TestCase
      */
     public function testSort($array, $direction, $result): void
     {
-        $this->assertSame($result, ArraySorter::sort($array, $direction));
+        $this->assertSame($result, (new ArraySorter)->sort($array, $direction));
     }
 
     /**
@@ -30,16 +30,13 @@ class ArraySorterTest extends TestCase
      */
     public function testSortBy($array, $direction, $result): void
     {
-        $arraySorter = new ArraySorter($array);
-        $arraySorter->sortBy($direction);
-
-        $this->assertSame($result, $arraySorter->get());
+        $this->assertSame($result, (new ArraySorter)->sort($array, $direction));
     }
 
     public function testSortWithEmpty(): void
     {
-        $this->assertSame([], ArraySorter::sort([], ['a', 'b', 'c']));
-        $this->assertSame(['a', 'b', 'c'], ArraySorter::sort(['a', 'b', 'c'], []));
+        $this->assertSame([], (new ArraySorter)->sort([], ['a', 'b', 'c']));
+        $this->assertSame(['a', 'b', 'c'], (new ArraySorter)->sort(['a', 'b', 'c'], []));
     }
 
     public function provider(): array

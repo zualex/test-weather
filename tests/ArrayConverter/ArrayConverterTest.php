@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tests\ArraySorter;
+namespace Tests\ArraySorter;
 
 use PHPUnit\Framework\TestCase;
 use Weather\ArrayConverter\ArrayConverter;
@@ -18,7 +18,7 @@ class ArrayConverterTest extends TestCase
      */
     public function testConvertToJson($array, $result): void
     {
-        $this->assertSame($result, ArrayConverter::convertToJson($array));
+        $this->assertSame($result, (new ArrayConverter)->convertToJson($array));
     }
 
     /**
@@ -29,7 +29,7 @@ class ArrayConverterTest extends TestCase
      */
     public function testConvertToXml($array, $result): void
     {
-        $this->assertSame($result, ArrayConverter::convertToXml($array));
+        $this->assertSame($result, (new ArrayConverter)->convertToXml($array));
     }
 
     public function testNotFoundComponent(): void
@@ -37,8 +37,7 @@ class ArrayConverterTest extends TestCase
         $this->expectException(InvalidType::class);
         $this->expectExceptionMessage(InvalidType::MESSAGE_NOT_FOUND_TYPE);
 
-        $converter = new ArrayConverter([]);
-        $converter->convertTo('not_found');
+        (new ArrayConverter)->convertTo('not_found', []);
     }
 
     public function providerJson(): array
