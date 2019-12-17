@@ -8,11 +8,8 @@ use Weather\ArrayConverter\Component\ArrayToJson;
 use Weather\ArrayConverter\Component\ArrayToXml;
 use Weather\ArrayConverter\Exception\InvalidType;
 
-class ArrayConverter
+class ArrayConverter implements ArrayConverterInterface
 {
-    public const TYPE_JSON = 'json';
-    public const TYPE_XML = 'xml';
-
     /**
      * @var ComponentInterface
      */
@@ -38,10 +35,7 @@ class ArrayConverter
     }
 
     /**
-     * Convert array to json
-     *
-     * @param array $array
-     * @return string
+     * {@inheritDoc}
      */
     public static function convertToJson(array $array): string
     {
@@ -51,10 +45,7 @@ class ArrayConverter
     }
 
     /**
-     * Convert array to xml
-     *
-     * @param array $array
-     * @return string
+     * {@inheritDoc}
      */
     public static function convertToXml(array $array): string
     {

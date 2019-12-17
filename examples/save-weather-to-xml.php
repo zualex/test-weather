@@ -11,8 +11,8 @@ require_once __DIR__ . '/../config/bootstrap.php';
 $coordinates = new CoordinateDTO(44.58883, 33.5224);
 $response = $app->getWeather($coordinates);
 
-$app->saveAsSortedJson(
-    '/storage/response.json',
+$app->saveAsSortedXml(
+    '/storage/response.xml',
     $response->jsonSerialize(),
-    ['date', 'temperature', 'wind_direction']
+    ['date', 'wind_speed', 'temperature']
 );

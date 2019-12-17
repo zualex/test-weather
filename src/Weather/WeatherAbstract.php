@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Weather\Weather\DTO\CoordinateDTO;
 use Weather\Weather\DTO\WeatherDTO;
 
-abstract class WeatherAbstract extends HttpAbstract
+abstract class WeatherAbstract extends HttpAbstract implements WeatherInterface
 {
     public const DEFAULT_UNIT = 'metric';
 
@@ -31,10 +31,7 @@ abstract class WeatherAbstract extends HttpAbstract
     }
 
     /**
-     * Get weather
-     *
-     * @param CoordinateDTO $coordinate
-     * @return WeatherDTO
+     * {@inheritDoc}
      */
     abstract public function getWeather(CoordinateDTO $coordinate): WeatherDTO;
 

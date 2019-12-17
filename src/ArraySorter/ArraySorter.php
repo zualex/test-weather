@@ -17,11 +17,7 @@ class ArraySorter
     }
 
     /**
-     * Sort by another array
-     *
-     * @param array $array
-     * @param array $arrayDirection
-     * @return array
+     * {@inheritDoc}
      */
     public static function sort(array $array, array $arrayDirection): array
     {
