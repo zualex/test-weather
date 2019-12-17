@@ -19,19 +19,25 @@ class OpenWeatherMap extends WeatherAbstract
 
     /**
      * {@inheritDoc}
+     *
+     * @throws \Cmfcmf\OpenWeatherMap\Exception
      */
-    public function getWeather(CoordinateDTO $coordinate, string $unit): WeatherDTO
+    public function getWeather(CoordinateDTO $coordinate): WeatherDTO
     {
+        $query = [
+            'lat' => $coordinate->getLat(),
+            'lon' => $coordinate->getLon(),
+        ];
+
         $client = $this->getClient();
+        $response = $client->getWeather($query, $this->getUnit());
 
-        // TODO get real data for client
-
-        $date = new \DateTime('now');
-        $temperature = new UnitDTO(10, 'celsius');
-        $pressure = new UnitDTO(5, 'hPa');
-        $humidity = new UnitDTO(80, '%');
-        $windSpeed = new UnitDTO(1, 'm/s');
-        $windDirection = new UnitDTO(140, 'SE');
+        $date = $response->lastUpdate;
+        $temperature = new UnitDTO($response->temperature->now->getValue(), $response->temperature->now->getUnit());
+        $pressure = new UnitDTO($response->pressure->getValue(), $response->pressure->getUnit());
+        $humidity = new UnitDTO($response->humidity->getValue(), $response->humidity->getUnit());
+        $windSpeed = new UnitDTO($response->wind->speed->getValue(), $response->wind->speed->getUnit());
+        $windDirection = new UnitDTO($response->wind->direction->getValue(), $response->wind->direction->getUnit());
 
         return new WeatherDTO($date, $temperature, $pressure, $humidity, $windSpeed, $windDirection);
     }
