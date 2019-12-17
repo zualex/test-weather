@@ -29,8 +29,8 @@ docker exec -it test-weather-fpm  \
 ## Example saved files
 ```bash
 docker exec -it test-weather-fpm  \
-    cat storage/response.example.json \
-    && cat storage/response.example.xml
+    cat examples/response.example.json \
+    && cat examples/response.example.xml
 ```
 
 ## Example code
