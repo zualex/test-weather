@@ -1,32 +1,56 @@
 # Test Weather
 
-## Commands
+## Start
 ```bash
 docker-compose up -d
 docker exec -it test-weather-fpm composer install
 ```
 
-## Example
+## Run unit tests
+```bash
+docker exec -it test-weather-fpm vendor/bin/phpunit
+```
+
+## Save to JSON
+
+```bash
+docker exec -it test-weather-fpm  \
+    php examples/save-weather-to-json.php \
+    && cat storage/response.json
+```
+
+## Save to JSON
+```bash
+docker exec -it test-weather-fpm  \
+    php examples/save-weather-to-xml.php \
+    && cat storage/response.xml
+```
+
+## Example saved files
+```bash
+docker exec -it test-weather-fpm  \
+    cat storage/response.example.json \
+    && cat storage/response.example.xml
+```
+
+## Example code
 ```php
-$httpRequestFactory = new RequestFactory();
-$httpClient = GuzzleAdapter::createWithConfig([]);
+<?php
 
-$clientFactory = new WeatherFactory($httpRequestFactory, $httpClient);
-$client = $clientFactory->create('openweathermap');
-$client->setApiKey('SECRET-API-KEY');
+declare(strict_types=1);
 
-$coordinates = [46.482, 30.723];
-$response = $client->getWeather($coordinates);
+use Weather\Weather\DTO\CoordinateDTO;
 
-$orderedArray = ArraySorter::sort(
+require_once __DIR__ . '/../config/bootstrap.php';
+
+/* @var $app \Weather\App */
+
+$coordinates = new CoordinateDTO(44.58883, 33.5224);
+$response = $app->getWeather($coordinates);
+
+$app->saveAsSortedJson(
+    '/storage/response.json',
     $response->jsonSerialize(),
     ['date', 'temperature', 'wind_direction']
 );
-
-$content = ArrayConverter::convertToJson($orderedArray);
-// $content = ArrayConverter::convertToXml($orderedArray);
-
-$adapter = new Local(__DIR__.'/path/to/root/');
-$filesystem = new Filesystem($adapter);
-$response = $filesystem->put('storage/file.json', $content);
 ```
