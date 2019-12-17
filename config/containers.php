@@ -30,10 +30,14 @@ return [
 
         return $client;
     }),
-    ArraySorterInterface::class => ArraySorter::class,
-    ArrayConverterInterface::class => ArrayConverter::class,
+    ArraySorterInterface::class => DI\create(ArraySorter::class),
+    ArrayConverterInterface::class => DI\create(ArrayConverter::class),
     \League\Flysystem\AdapterInterface::class => DI\factory(function (ContainerInterface $c) {
-        return new League\Flysystem\Adapter\Local(__DIR__ . '/../');
+        if (getenv('APP_ENV') === 'testing') {
+            return new \League\Flysystem\Memory\MemoryAdapter();
+        }
+
+        return new \League\Flysystem\Adapter\Local(__DIR__ . '/../');
     }),
     \League\Flysystem\FilesystemInterface::class => DI\factory(function (ContainerInterface $c) {
         $adapter = $c->get(\League\Flysystem\AdapterInterface::class);
