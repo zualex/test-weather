@@ -34,7 +34,7 @@ abstract class HttpAbstract
     /**
      * @return ClientInterface
      */
-    public function getHttpClient(): ClientInterface
+    protected function getHttpClient(): ClientInterface
     {
         return $this->httpClient;
     }
@@ -42,7 +42,7 @@ abstract class HttpAbstract
     /**
      * @return RequestFactoryInterface
      */
-    public function getHttpRequestFactory(): RequestFactoryInterface
+    protected function getHttpRequestFactory(): RequestFactoryInterface
     {
         return $this->httpRequestFactory;
     }
