@@ -1,9 +1,20 @@
 # Test Weather
 
-## Start
+## Installation
 ```bash
 docker-compose up -d
 docker exec -it test-weather-fpm composer install
+```
+
+#### Create .env
+```bash
+docker exec -it test-weather-fpm \
+    php -r "file_exists('.env') || copy('.env.example', '.env');"
+```
+
+#### Test api key for openweathermap
+```bash
+API_KEY_OPEN_WEATHER_MAP=8fdbb55f944e5243a5e0a221e0a561e4
 ```
 
 ## Run unit tests
