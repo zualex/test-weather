@@ -13,7 +13,7 @@ class ArraySorter implements ArraySorterInterface
      * $array = ['b' => 1, 'c' => 1, 'a' => 1];
      * $direction = ['a', 'b', 'c'];
      * ...
-     *  $arraySorter->sortBy($direction)->get() // ['a' => 1, 'b' => 1, 'c' => 1];
+     *  (new ArraySorter)->sort($array, $direction) // ['a' => 1, 'b' => 1, 'c' => 1];
      */
     public function sort(array $array, array $arrayDirection): array
     {
