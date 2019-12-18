@@ -13,6 +13,11 @@ use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 use Psr\Http\Message\RequestFactoryInterface;
 use Http\Factory\Guzzle\RequestFactory;
 use Psr\Container\ContainerInterface;
+use League\Flysystem\AdapterInterface;
+use League\Flysystem\Memory\MemoryAdapter;
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\FilesystemInterface;
+use League\Flysystem\Filesystem;
 use function DI\factory;
 
 return [
@@ -32,16 +37,16 @@ return [
     }),
     ArraySorterInterface::class => DI\create(ArraySorter::class),
     ArrayConverterInterface::class => DI\create(ArrayConverter::class),
-    \League\Flysystem\AdapterInterface::class => DI\factory(function (ContainerInterface $c) {
+    AdapterInterface::class => DI\factory(function (ContainerInterface $c) {
         if (getenv('APP_ENV') === 'testing') {
-            return new \League\Flysystem\Memory\MemoryAdapter();
+            return new MemoryAdapter();
         }
 
-        return new \League\Flysystem\Adapter\Local(__DIR__ . '/../');
+        return new Local(__DIR__ . '/../');
     }),
-    \League\Flysystem\FilesystemInterface::class => DI\factory(function (ContainerInterface $c) {
-        $adapter = $c->get(\League\Flysystem\AdapterInterface::class);
+    FilesystemInterface::class => DI\factory(function (ContainerInterface $c) {
+        $adapter = $c->get(AdapterInterface::class);
 
-        return new \League\Flysystem\Filesystem($adapter);
+        return new Filesystem($adapter);
     }),
 ];
